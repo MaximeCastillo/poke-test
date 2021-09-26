@@ -23,9 +23,6 @@ jobs:
       with:
         ruby-version: 2.7.1
 
-    - name: Print ruby version
-      run: ${{ steps.ruby.outputs.ruby-path }} --version
-
     - name: Install PostgreSQL 10
       run: |
         sudo apt-get -yqq install libpq-dev
