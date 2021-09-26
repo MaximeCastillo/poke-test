@@ -21,7 +21,7 @@ jobs:
 
     - uses: actions/setup-ruby@v1
       with:
-        ruby-version: 2.7.1
+        ruby-version: 2.7
 
     - name: Print ruby version
       run: ${{ steps.ruby.outputs.ruby-path }} --version
