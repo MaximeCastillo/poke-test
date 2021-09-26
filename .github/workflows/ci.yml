@@ -12,7 +12,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:9.5.25
+        image: postgres:10.11
         ports: ["5432:5432"]
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
@@ -36,7 +36,7 @@ jobs:
     - name: Print ruby version
       run: ${{ steps.ruby.outputs.ruby-path }} --version
 
-    - name: Install PostgreSQL
+    - name: Install PostgreSQL 10
       run: |
         sudo apt-get -yqq install libpq-dev
 
