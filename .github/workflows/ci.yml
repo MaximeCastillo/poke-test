@@ -6,33 +6,39 @@ on:
       - '**'
 
 jobs:
-  test:
+  build:
 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ruby-version: ['2.7.1']
 
     services:
       postgres:
-        image: postgres:10.11
+        image: postgres:9.5.25
         ports: ["5432:5432"]
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v1
 
-    - name: Set up Ruby
-    # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
-    # change this to (see https://github.com/ruby/setup-ruby#versioning):
-    # uses: ruby/setup-ruby@v1
-      uses: ruby/setup-ruby@473e4d8fe5dd94ee328fdfca9f8c9c7afc9dae5e
+    - name: Cache Ruby
+      uses: actions/cache@preview
+      id: cache
       with:
-        ruby-version: ${{ matrix.ruby-version }}
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+        path: ~/local/rubies
+        key: ruby-2.7.1
+
+    - name: Set up Ruby 2.7.1
+      uses: clupprich/ruby-build-action@master
+      id: ruby
+      with:
+        ruby-version: 2.7.1
+        cache-available: ${{ steps.cache.outputs.cache-hit == 'true' }}
+
+    - name: Print ruby version
+      run: ${{ steps.ruby.outputs.ruby-path }} --version
 
     - name: Install PostgreSQL
-      run: sudo apt-get -yqq install libpq-dev
+      run: |
+        sudo apt-get -yqq install libpq-dev
 
     - name: Setup Database
       env:
@@ -44,5 +50,12 @@ jobs:
         bundle install --jobs 4 --retry 3
         bin/rails db:create db:schema:load
 
-    - name: Run tests
-      run: bundle exec rspec
+    - name: Build and test with rspec
+      env:
+        PGHOST: localhost
+        PGUSER: postgres
+        RAILS_ENV: test
+      run: |
+        gem install bundler -v 1.17.3
+        bundle install --jobs 4 --retry 3
+        bundle exec rspec
