@@ -3,8 +3,7 @@ name: Continuous Integration
 on:
   push:
     branches:
-      - develop
-      - feature/ci
+      - '**'
 
 jobs:
   test:
@@ -27,7 +26,7 @@ jobs:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
     - name: Install PostgreSQL
-        run: sudo apt-get -yqq install libpq-dev
+      run: sudo apt-get -yqq install libpq-dev
 
     - name: Setup Database
       env:
