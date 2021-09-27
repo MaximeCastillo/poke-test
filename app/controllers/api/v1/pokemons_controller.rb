@@ -1,5 +1,13 @@
 class Api::V1::PokemonsController < ApplicationController
   before_action :set_pokemon, only: [:show]
+  swagger_controller :pokemons, "Pokemons"
+
+  swagger_controller :pokemons, 'Pokemons'
+
+  swagger_api :index do
+    summary 'Returns all pokemons'
+    notes 'Pokemons and their types'
+  end
 
   # GET /pokemons
   def index
