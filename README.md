@@ -1,5 +1,5 @@
 # Poké Test
-API Rails, basée sur l'API [PokéAPI](https://pokeapi.co/docs/v2), qui présente une liste de tous les pokémons connus (+ de 1000 !), ainsi que des caractéristiques plus détaillés pour chacun d'entre eux. Version en ligne accessible sur [poke-test-online.herokuapp.com](http://poke-test-online.herokuapp.com/api/v1).
+API Rails, basée sur l'API [PokéAPI](https://pokeapi.co/docs/v2), qui présente une liste de tous les pokémons connus (+ de 1000 !), ainsi que des caractéristiques plus détaillés pour chacun d'entre eux. Version en ligne accessible sur [poke-test-online.herokuapp.com](http://poke-test-online.herokuapp.com).
 
 ## Sommaire
 
